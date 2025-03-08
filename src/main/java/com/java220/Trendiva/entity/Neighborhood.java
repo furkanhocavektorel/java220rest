@@ -23,6 +23,5 @@ public class Neighborhood {
     private String name;
 
     @ManyToOne
-    @Column(name = "cityid")
     private City city;
 }
