@@ -20,11 +20,8 @@ public class UserController {
     // http://localhost:8097/kullanici/save
     @PostMapping("save")
     public void saveUser(@RequestBody UserSaveRequestDto userSaveRequestDto){
-
         userService.saveUser(userSaveRequestDto);
-
     }
-
 
     @GetMapping("get-all")
     public List<UserResponseDto> getAllUser(){
@@ -39,6 +36,24 @@ public class UserController {
     @DeleteMapping("delete")
     public void deleteAll(Long id){
         userService.deleteUser(id);
+    }
+
+    @PutMapping("update/{id}")
+    public UserResponseDto updateUser(@PathVariable Long id, @RequestBody UserSaveRequestDto userSaveRequestDto) {
+        return userService.updateUser(id, userSaveRequestDto);
+    }
+
+    @GetMapping("test2/{sayi2}")
+    public int test2(@PathVariable int sayi2){
+        int a= 56-sayi2;
+        return a;
+    }
+
+
+    @GetMapping("test")
+    public int test(@RequestParam int sayi,int sayi2){
+        int a= sayi*56-sayi2;
+        return a;
     }
 
 

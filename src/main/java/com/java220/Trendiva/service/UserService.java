@@ -4,12 +4,14 @@ import com.java220.Trendiva.dto.UserResponseDto;
 import com.java220.Trendiva.dto.UserSaveRequestDto;
 import com.java220.Trendiva.entity.User;
 import com.java220.Trendiva.entity.enums.Role;
+import com.java220.Trendiva.exception.custom.MyUserException;
 import com.java220.Trendiva.repository.IAddressRepository;
 import com.java220.Trendiva.repository.IUserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -22,6 +24,19 @@ public class UserService {
 
 
     public void saveUser(UserSaveRequestDto userSaveRequestDto){
+
+        Optional<User> user1= repository.findByEmail(userSaveRequestDto.getEmail());
+
+        if (user1.isPresent()){
+            throw new MyUserException("bu maile ait biri kayitli...");
+        }
+
+        user1=repository.findByUsername(userSaveRequestDto.getUsername());
+
+        if (user1.isPresent()){
+            throw new MyUserException("bu kullanici adina ait biri kayitli...");
+        }
+
 
        User user= new User();
        user.setEmail(userSaveRequestDto.getEmail());
@@ -55,26 +70,51 @@ public class UserService {
 
 
     public UserResponseDto getUserByUsername(String username) {
-        User user=  repository.findByUsername(username);
+        Optional<User> user=  repository.findByUsername(username);
+
+        if (user.isEmpty()){
+            throw new MyUserException("kullanici adına ait kayit bulunamadi...");
+        }
+
+
 
         UserResponseDto dto = new UserResponseDto();
 
-        dto.setEmail(user.getEmail());
-        dto.setId(user.getId());
-        dto.setName(user.getName());
-        dto.setUsername(user.getUsername());
+        dto.setEmail(user.get().getEmail());
+        dto.setId(user.get().getId());
+        dto.setName(user.get().getName());
+        dto.setUsername(user.get().getUsername());
 
         return dto;
     }
 
 
     public void deleteUser(Long id) {
-
         repository.deleteById(id);
-
-
     }
 
+    public UserResponseDto updateUser(Long id, UserSaveRequestDto userSaveRequestDto) {
 
+        Optional<User> existingUser = repository.findById(id);
+
+        if (existingUser.isEmpty()){
+           throw new MyUserException(id+" ye sahip kullanici bulunamadi....");
+        }
+
+        existingUser.get().setEmail(userSaveRequestDto.getEmail());
+        existingUser.get().setUsername(userSaveRequestDto.getUsername());
+        existingUser.get().setPassword(userSaveRequestDto.getPassword());
+        existingUser.get().setRole(Role.valueOf(userSaveRequestDto.getRole()));
+
+        User updatedUser = repository.save(existingUser.get());
+
+        UserResponseDto responseDto = new UserResponseDto();
+        responseDto.setId(updatedUser.getId());
+        responseDto.setUsername(updatedUser.getUsername());
+        responseDto.setEmail(updatedUser.getEmail());
+        responseDto.setName(updatedUser.getName());
+
+        return responseDto;
+    }
 
 }
