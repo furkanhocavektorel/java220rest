@@ -43,6 +43,13 @@ public class UserController {
         return userService.updateUser(id, userSaveRequestDto);
     }
 
+    @DeleteMapping("soft-delete")
+    public void softDeleteByUserId(long id){
+        userService.softDelete(id);
+    }
+
+
+
     @GetMapping("test2/{sayi2}")
     public int test2(@PathVariable int sayi2){
         int a= 56-sayi2;

@@ -46,8 +46,6 @@ public class UserService {
        repository.save(user);
     }
 
-    // kullanıcıların username ve mail adresleri listelenecek.
-
 
     public List<UserResponseDto> getAllUser(){
         List<User> users= repository.findAll();
@@ -116,5 +114,21 @@ public class UserService {
 
         return responseDto;
     }
+
+
+    public void softDelete(long id) {
+        Optional<User> user =repository.findById(id);
+
+        if (user.isEmpty()){
+            throw new MyUserException("kullanici bulunamadi");
+        }
+        user.get().setDeleted(true);
+
+        repository.save(user.get());
+
+
+    }
+
+
 
 }

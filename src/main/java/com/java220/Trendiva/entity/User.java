@@ -24,6 +24,7 @@ public class User {
     private String username;
     private String email;
     private String password;
+    private Boolean deleted=false;
 
     @Enumerated(EnumType.STRING)
     private Role role;
