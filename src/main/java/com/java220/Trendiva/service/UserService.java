@@ -1,11 +1,11 @@
 package com.java220.Trendiva.service;
 
-import com.java220.Trendiva.dto.UserResponseDto;
-import com.java220.Trendiva.dto.UserSaveRequestDto;
+import com.java220.Trendiva.dto.response.UserResponseDto;
+import com.java220.Trendiva.dto.request.UserSaveRequestDto;
 import com.java220.Trendiva.entity.User;
 import com.java220.Trendiva.entity.enums.Role;
 import com.java220.Trendiva.exception.custom.MyUserException;
-import com.java220.Trendiva.repository.IAddressRepository;
+import com.java220.Trendiva.mapper.UserMapper;
 import com.java220.Trendiva.repository.IUserRepository;
 import org.springframework.stereotype.Service;
 
@@ -75,13 +75,9 @@ public class UserService {
         }
 
 
+        // User -> UserResponseDto
 
-        UserResponseDto dto = new UserResponseDto();
-
-        dto.setEmail(user.get().getEmail());
-        dto.setId(user.get().getId());
-        dto.setName(user.get().getName());
-        dto.setUsername(user.get().getUsername());
+        UserResponseDto dto = UserMapper.INSTANCE.toUserResponseDto(user.get());
 
         return dto;
     }
@@ -93,26 +89,15 @@ public class UserService {
 
     public UserResponseDto updateUser(Long id, UserSaveRequestDto userSaveRequestDto) {
 
-        Optional<User> existingUser = repository.findById(id);
+        User existingUser = repository.findById(id).orElseThrow(()->  new MyUserException("kullanici yok"));
 
-        if (existingUser.isEmpty()){
-           throw new MyUserException(id+" ye sahip kullanici bulunamadi....");
-        }
+        existingUser=UserMapper.INSTANCE.toUser(userSaveRequestDto);
 
-        existingUser.get().setEmail(userSaveRequestDto.getEmail());
-        existingUser.get().setUsername(userSaveRequestDto.getUsername());
-        existingUser.get().setPassword(userSaveRequestDto.getPassword());
-        existingUser.get().setRole(Role.valueOf(userSaveRequestDto.getRole()));
+        User updatedUser = repository.save(existingUser);
 
-        User updatedUser = repository.save(existingUser.get());
+        // user -> UserResponseDto
 
-        UserResponseDto responseDto = new UserResponseDto();
-        responseDto.setId(updatedUser.getId());
-        responseDto.setUsername(updatedUser.getUsername());
-        responseDto.setEmail(updatedUser.getEmail());
-        responseDto.setName(updatedUser.getName());
-
-        return responseDto;
+        return UserMapper.INSTANCE.toUserResponseDto(updatedUser);
     }
 
 

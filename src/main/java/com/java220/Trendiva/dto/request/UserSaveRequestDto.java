@@ -1,4 +1,4 @@
-package com.java220.Trendiva.dto;
+package com.java220.Trendiva.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

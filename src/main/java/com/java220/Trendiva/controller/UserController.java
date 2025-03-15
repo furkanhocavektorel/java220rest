@@ -1,8 +1,7 @@
 package com.java220.Trendiva.controller;
 
-import com.java220.Trendiva.dto.UserResponseDto;
-import com.java220.Trendiva.dto.UserSaveRequestDto;
-import com.java220.Trendiva.entity.User;
+import com.java220.Trendiva.dto.response.UserResponseDto;
+import com.java220.Trendiva.dto.request.UserSaveRequestDto;
 import com.java220.Trendiva.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
