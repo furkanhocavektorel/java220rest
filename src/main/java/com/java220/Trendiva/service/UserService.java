@@ -1,12 +1,15 @@
 package com.java220.Trendiva.service;
 
+import com.java220.Trendiva.dto.request.LoginRequestDto;
 import com.java220.Trendiva.dto.response.UserResponseDto;
 import com.java220.Trendiva.dto.request.UserSaveRequestDto;
 import com.java220.Trendiva.entity.User;
 import com.java220.Trendiva.entity.enums.Role;
 import com.java220.Trendiva.exception.custom.MyUserException;
+import com.java220.Trendiva.exception.custom.TokenException;
 import com.java220.Trendiva.mapper.UserMapper;
 import com.java220.Trendiva.repository.IUserRepository;
+import com.java220.Trendiva.util.JwtTokenManager;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,9 +20,11 @@ import java.util.Optional;
 public class UserService {
 
     private final IUserRepository repository;
+    private final JwtTokenManager jwtTokenManager;
 
-    public UserService(IUserRepository userRepository){
+    public UserService(IUserRepository userRepository, JwtTokenManager jwtTokenManager){
         this.repository=userRepository;
+        this.jwtTokenManager = jwtTokenManager;
     }
 
 
@@ -113,5 +118,17 @@ public class UserService {
     }
 
 
+    public String login(LoginRequestDto dto) {
+        User user= repository.findByUsername(dto.getUsername())
+                .orElseThrow(()-> new MyUserException("kullanici bulunamadi",4006));
+
+        if (!user.getPassword().equals(dto.getPassword())){
+            throw new MyUserException("şifre eşleşmiyor...",4007);
+        }
+
+        String token=jwtTokenManager.createToken(user.getId()).orElseThrow(()-> new TokenException("bilinmeyen hata",2002));
+
+        return token;
+    }
 
 }

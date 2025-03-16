@@ -1,5 +1,6 @@
 package com.java220.Trendiva.controller;
 
+import com.java220.Trendiva.dto.request.LoginRequestDto;
 import com.java220.Trendiva.dto.response.UserResponseDto;
 import com.java220.Trendiva.dto.request.UserSaveRequestDto;
 import com.java220.Trendiva.service.UserService;
@@ -21,6 +22,18 @@ public class UserController {
     public void saveUser(@RequestBody UserSaveRequestDto userSaveRequestDto){
         userService.saveUser(userSaveRequestDto);
     }
+
+
+    @PostMapping("login")
+    public String login(LoginRequestDto dto){
+
+        return userService.login(dto);
+    }
+
+
+
+
+
 
     @GetMapping("get-all")
     public List<UserResponseDto> getAllUser(){
