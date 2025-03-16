@@ -28,13 +28,13 @@ public class UserService {
         Optional<User> user1= repository.findByEmail(userSaveRequestDto.getEmail());
 
         if (user1.isPresent()){
-            throw new MyUserException("bu maile ait biri kayitli...");
+            throw new MyUserException("bu maile ait biri kayitli...",4001);
         }
 
         user1=repository.findByUsername(userSaveRequestDto.getUsername());
 
         if (user1.isPresent()){
-            throw new MyUserException("bu kullanici adina ait biri kayitli...");
+            throw new MyUserException("bu kullanici adina ait biri kayitli...",4002);
         }
 
 
@@ -71,7 +71,7 @@ public class UserService {
         Optional<User> user=  repository.findByUsername(username);
 
         if (user.isEmpty()){
-            throw new MyUserException("kullanici adına ait kayit bulunamadi...");
+            throw new MyUserException("kullanici adına ait kayit bulunamadi...",4003);
         }
 
 
@@ -89,7 +89,7 @@ public class UserService {
 
     public UserResponseDto updateUser(Long id, UserSaveRequestDto userSaveRequestDto) {
 
-        User existingUser = repository.findById(id).orElseThrow(()->  new MyUserException("kullanici yok"));
+        User existingUser = repository.findById(id).orElseThrow(()->  new MyUserException("kullanici yok",4004));
 
         existingUser=UserMapper.INSTANCE.toUser(userSaveRequestDto);
 
@@ -105,13 +105,11 @@ public class UserService {
         Optional<User> user =repository.findById(id);
 
         if (user.isEmpty()){
-            throw new MyUserException("kullanici bulunamadi");
+            throw new MyUserException("kullanici bulunamadi",4005);
         }
         user.get().setDeleted(true);
 
         repository.save(user.get());
-
-
     }
 
 

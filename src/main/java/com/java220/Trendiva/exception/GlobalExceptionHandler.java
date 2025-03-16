@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
     public ExceptionMessage CategoryExceptionHandler(CategoryException e){
 
         ExceptionMessage exceptionMessage= new ExceptionMessage();
-        exceptionMessage.setCode(6001);
+        exceptionMessage.setCode(e.code);
         exceptionMessage.setMessage(e.getMessage());
 
         return exceptionMessage;
@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
     public ExceptionMessage myUserExceptionHandler(MyUserException mue){
 
         ExceptionMessage exceptionMessage = new ExceptionMessage();
-        exceptionMessage.setCode(4001);
+        exceptionMessage.setCode(mue.code);
         exceptionMessage.setMessage(mue.getMessage());
 
         return exceptionMessage;
@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
     public ExceptionMessage MyRuntimeException(RuntimeException ex){
 
         ExceptionMessage exceptionMessage= new ExceptionMessage();
-        exceptionMessage.setCode(5007);
+        exceptionMessage.setCode(1000);
         exceptionMessage.setMessage(ex.getMessage());
 
         return exceptionMessage;
