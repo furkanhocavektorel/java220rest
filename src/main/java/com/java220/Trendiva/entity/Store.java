@@ -1,5 +1,6 @@
 package com.java220.Trendiva.entity;
 
+import com.java220.Trendiva.entity.base.BaseEntityLong;
 import com.java220.Trendiva.entity.enums.StoreStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,11 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Store {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Store extends BaseEntityLong {
 
     private String vkn;
 

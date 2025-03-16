@@ -1,5 +1,6 @@
 package com.java220.Trendiva.entity;
 
+import com.java220.Trendiva.entity.base.BaseEntityLong;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,11 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Address {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Address extends BaseEntityLong {
 
     @ManyToOne
     private City city;

@@ -1,9 +1,7 @@
 package com.java220.Trendiva.entity;
 
+import com.java220.Trendiva.entity.base.BaseEntityLong;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.*;
 
 @Entity
@@ -11,10 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Category extends BaseEntityLong {
 
     private String name;
 

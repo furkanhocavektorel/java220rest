@@ -1,5 +1,6 @@
 package com.java220.Trendiva.entity;
 
+import com.java220.Trendiva.entity.base.BaseEntityLong;
 import com.java220.Trendiva.entity.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends BaseEntityLong {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +25,6 @@ public class User {
     private String username;
     private String email;
     private String password;
-    private Boolean deleted=false;
 
     @Enumerated(EnumType.STRING)
     private Role role;

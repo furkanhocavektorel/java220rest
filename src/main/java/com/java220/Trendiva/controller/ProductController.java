@@ -17,9 +17,15 @@ public class ProductController {
 
     @PostMapping("save")
     public void save(@RequestBody ProductSaveRequestDto dto){
-
         productService.save(dto);
     }
 
+    // get all products
+
+    // get By Name
+
+    // update product
+
+    // delete product
 
 }

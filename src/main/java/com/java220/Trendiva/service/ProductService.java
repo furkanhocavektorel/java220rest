@@ -3,6 +3,7 @@ package com.java220.Trendiva.service;
 import com.java220.Trendiva.dto.request.ProductSaveRequestDto;
 import com.java220.Trendiva.entity.Category;
 import com.java220.Trendiva.entity.Product;
+import com.java220.Trendiva.exception.custom.CategoryException;
 import com.java220.Trendiva.repository.ICategoryRepository;
 import com.java220.Trendiva.repository.IProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +19,7 @@ public class ProductService {
 
     public void save(ProductSaveRequestDto dto){
 
-        Category category = categoryService.findById(dto.getCategoryId()).orElseThrow(()-> new RuntimeException("category bulunamadi"));
-
+        Category category = categoryService.findById(dto.getCategoryId()).orElseThrow(()-> new CategoryException("category bulunamadi"));
 
         Product product= new Product();
 

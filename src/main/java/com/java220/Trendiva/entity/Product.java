@@ -1,5 +1,6 @@
 package com.java220.Trendiva.entity;
 
+import com.java220.Trendiva.entity.base.BaseEntityLong;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,11 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Product extends BaseEntityLong {
 
     private String brand;
 

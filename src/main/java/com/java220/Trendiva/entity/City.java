@@ -1,5 +1,6 @@
 package com.java220.Trendiva.entity;
 
+import com.java220.Trendiva.entity.base.BaseEntityInteger;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,12 +13,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "cities")
-public class City {
+public class City extends BaseEntityInteger {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cityid")
-    private Integer id;
 
     @Column(name = "cityname")
     private String name;
