@@ -7,6 +7,7 @@ import com.java220.Trendiva.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 // http://localhost:8097/kullanici
@@ -26,7 +27,6 @@ public class UserController {
 
     @PostMapping("login")
     public String login(LoginRequestDto dto){
-
         return userService.login(dto);
     }
 
@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @DeleteMapping("delete")
-    public void deleteAll(Long id){
+    public void delete(Long id){
         userService.deleteUser(id);
     }
 

@@ -18,4 +18,6 @@ public class StoreSaveRequestDto {
 
     private String email;
 
+    private String token;
+
 }
